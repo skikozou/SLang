@@ -3,11 +3,12 @@ func main() null {
     var int i < 10;
     Printf<Add<i,3;
     n,err<AtoI<i;
-    if (err != null) {
+    if (1 << 2) {
         Printf<err;
         return null
     }
-
+    //<< >> =< => == !=
+    
     i <+ 3;
     i <- 5;
     i < i - 1;

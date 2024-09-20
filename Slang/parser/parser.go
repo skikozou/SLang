@@ -3,6 +3,7 @@ package parser
 import (
 	"Slang/Slang"
 	"errors"
+	"fmt"
 	"strconv"
 )
 
@@ -36,7 +37,13 @@ func Parser(s [][]string) *Slang.Code {
 				}
 			}
 		case "Printf":
-
+			if l[1] == "<" {
+				for _, w := range l[1:] {
+					if val, ok := parsedCode.Elem[w]; ok {
+						fmt.Print("OUTPUT : ", string(val.(string)), "\n")
+					}
+				}
+			}
 		default:
 			if val, ok := parsedCode.Elem[l[0]]; ok {
 				switch val.(type) {
@@ -79,9 +86,32 @@ func Parser(s [][]string) *Slang.Code {
 						}
 					}
 				case string:
-
+					switch l[1] {
+					case "<":
+						if val, ok := parsedCode.Elem[l[2]]; ok {
+							switch val.(type) {
+							case int:
+								parsedCode.Elem[l[0]] = parsedCode.Elem[l[2]]
+							}
+						}
+					case "<+":
+						if val, ok := parsedCode.Elem[l[2]]; ok {
+							switch val.(type) {
+							case string:
+								parsedCode.Elem[l[0]] = parsedCode.Elem[l[0]].(string) + parsedCode.Elem[l[2]].(string)
+							}
+						}
+					}
 				case bool:
-
+					switch l[1] {
+					case "<":
+						if val, ok := parsedCode.Elem[l[2]]; ok {
+							switch val.(type) {
+							case int:
+								parsedCode.Elem[l[0]] = parsedCode.Elem[l[2]]
+							}
+						}
+					}
 				}
 			}
 		}
